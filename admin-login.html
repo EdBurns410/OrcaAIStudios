@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orca AI Studios | Admin Login</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header admin-header">
+      <nav class="nav">
+        <div class="logo">
+          <span class="logo-mark">Orca</span>
+          <span class="logo-sub">AI Studios</span>
+        </div>
+      </nav>
+      <section class="admin-hero">
+        <div>
+          <p class="eyebrow">Admin</p>
+          <h1>Sign In Required</h1>
+          <p class="lead">
+            Use your Orca admin account to access customer requests.
+          </p>
+        </div>
+        <div class="admin-access panel">
+          <h3>Admin Sign-In</h3>
+          <p>Only approved admin accounts can continue.</p>
+          <div class="admin-inputs">
+            <button class="btn btn-primary" id="login-btn">Sign In</button>
+          </div>
+          <p class="form-status" id="admin-status" aria-live="polite"></p>
+        </div>
+      </section>
+    </header>
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="admin-login.js"></script>
+  </body>
+</html>

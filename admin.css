@@ -1,0 +1,95 @@
+/* Admin Specific Styles */
+.admin-header {
+  padding-bottom: 2rem;
+}
+
+.admin-hero {
+  margin-top: 3rem;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
+}
+
+.admin-access {
+  background: rgba(15, 28, 46, 0.6);
+  backdrop-filter: blur(20px);
+}
+
+.admin-inputs {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-user {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-top: 1rem;
+}
+
+.admin-section {
+  padding-top: 0;
+  display: none;
+  /* Toggled by JS */
+}
+
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Table Styles */
+.table-container {
+  padding: 0;
+  /* Remove padding for edge-to-edge table if desired, or keep */
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-text-main);
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 1rem;
+  font-family: var(--font-display);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.btn-xs {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-xs:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

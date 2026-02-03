@@ -1,0 +1,9 @@
+{
+  "name": "orca-ai-studios",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Orca AI Studios portfolio site",
+  "dependencies": {
+    "@netlify/neon": "^0.1.2"
+  }
+}
