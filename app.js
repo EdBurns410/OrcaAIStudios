@@ -250,16 +250,16 @@ if (reviewSection) {
     };
 
     const keywordMap = {
-      'Data Dashboards': ['Data Dashboards & Analysis', 'Business Infographics', 'Research'],
-      'Business Plans': ['Research', 'Business Infographics', 'Software Development'],
-      'Full Stack Web Applications': ['Full Stack', 'React', 'Internal Tools'],
+      'Data Dashboards': ['Data Dashboards & Analysis', 'Business Inforgraphics', 'Research'],
+      'Business Plans': ['Research', 'Business Inforgraphics', 'Software Development'],
+      'Full Stack Web Applications': ['Web Applications', 'Internal Web App Tools', 'React'],
       'Data Analytics Consultation': ['Data Dashboards & Analysis', 'Research', 'Automation'],
     };
 
     const globalKeywords = [
       'Advanced UI Software Development',
       'Quick Build',
-      'Internal Web Apps',
+      'Internal Web App Tools',
       'React',
       'Full Stack',
       'Software Development',
@@ -286,7 +286,7 @@ if (reviewSection) {
       for (let i = 0; i < 2; i += 1) {
         set.add(globalKeywords[(start + i) % globalKeywords.length]);
       }
-      return Array.from(set).slice(0, 4);
+      return Array.from(set).slice(0, 3);
     };
 
     const hashString = (value) => {
@@ -414,8 +414,10 @@ if (reviewSection) {
             tag.textContent = value;
             tags.appendChild(tag);
           });
-          const tagValues = [sanitizeValue(review.category), sanitizeValue(review.budget), sanitizeValue(review.duration)];
-          tagValues.filter(Boolean).forEach((value) => {
+          const tagValues = [sanitizeValue(review.category), sanitizeValue(review.budget), sanitizeValue(review.duration)]
+            .filter(Boolean)
+            .slice(0, 2);
+          tagValues.forEach((value) => {
             const tag = document.createElement('span');
             tag.className = 'review-tag';
             tag.textContent = value;
