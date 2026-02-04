@@ -235,14 +235,91 @@ if (reviewSection) {
     };
 
     const sanitizeValue = (value) => (value && value !== 'N/A' ? value : null);
+    const sanitizeText = (value) => (value ? value.replace(/fiverr/gi, 'the platform') : value);
 
-    fetch('reviews.json')
-      .then((response) => {
+    const loadReviews = () => {
+      if (Array.isArray(window.REVIEW_DATA)) {
+        return Promise.resolve(window.REVIEW_DATA);
+      }
+      return fetch('reviews.json').then((response) => {
         if (!response.ok) {
           throw new Error('Unable to load reviews');
         }
         return response.json();
-      })
+      });
+    };
+
+    const keywordMap = {
+      'Data Dashboards': ['Data Dashboards & Analysis', 'Business Infographics', 'Research'],
+      'Business Plans': ['Research', 'Business Infographics', 'Software Development'],
+      'Full Stack Web Applications': ['Full Stack', 'React', 'Internal Tools'],
+      'Data Analytics Consultation': ['Data Dashboards & Analysis', 'Research', 'Automation'],
+    };
+
+    const globalKeywords = [
+      'Advanced UI Software Development',
+      'Quick Build',
+      'Internal Web Apps',
+      'React',
+      'Full Stack',
+      'Software Development',
+    ];
+
+    const reviewImages = {
+      'Data Dashboards': [
+        'images/data_revenue.png',
+        'images/data_sales.png',
+        'images/data_trading.png',
+        'images/data_social.png',
+        'images/data_hair.png',
+      ],
+      'Business Plans': ['images/brand_identity.png', 'images/treehouse.png'],
+      'Full Stack Web Applications': ['images/bmtl_dark.png', 'images/georivals.png'],
+      'Data Analytics Consultation': ['images/data_revenue.png', 'images/data_sales.png'],
+    };
+
+    const buildKeywords = (review, index) => {
+      const set = new Set();
+      const mapped = keywordMap[review.category] || [];
+      mapped.forEach((item) => set.add(item));
+      const start = index % globalKeywords.length;
+      for (let i = 0; i < 2; i += 1) {
+        set.add(globalKeywords[(start + i) % globalKeywords.length]);
+      }
+      return Array.from(set).slice(0, 4);
+    };
+
+    const hashString = (value) => {
+      let hash = 0;
+      for (let i = 0; i < value.length; i += 1) {
+        hash = (hash * 31 + value.charCodeAt(i)) % 360;
+      }
+      return hash;
+    };
+
+    const createAvatar = (user) => {
+      const avatar = document.createElement('div');
+      avatar.className = 'review-avatar';
+      const initials = user
+        .replace(/[^a-z0-9]/gi, '')
+        .slice(0, 2)
+        .toUpperCase();
+      const hue = hashString(user);
+      avatar.style.setProperty('--avatar-hue', String(hue));
+      const text = document.createElement('span');
+      text.textContent = initials || 'U';
+      avatar.appendChild(text);
+      return avatar;
+    };
+
+    const resolveReviewImage = (review, index) => {
+      const images = reviewImages[review.category] || [];
+      if (!images.length) return null;
+      if (index % 4 !== 0) return null;
+      return images[index % images.length];
+    };
+
+    loadReviews()
       .then((reviews) => {
         if (!Array.isArray(reviews) || !reviews.length) {
           return;
@@ -281,6 +358,18 @@ if (reviewSection) {
           card.className = 'review-card';
           card.dataset.reviewIndex = String(index);
 
+          const previewImage = resolveReviewImage(review, index);
+          if (previewImage) {
+            const media = document.createElement('div');
+            media.className = 'review-media';
+            const img = document.createElement('img');
+            img.src = previewImage;
+            img.alt = 'Project preview';
+            img.loading = 'lazy';
+            media.appendChild(img);
+            card.appendChild(media);
+          }
+
           const cardTop = document.createElement('div');
           cardTop.className = 'review-card-top';
 
@@ -299,11 +388,12 @@ if (reviewSection) {
 
           const text = document.createElement('p');
           text.className = 'review-text';
-          text.textContent = review.text;
+          text.textContent = sanitizeText(review.text);
           card.appendChild(text);
 
           const meta = document.createElement('div');
           meta.className = 'review-meta';
+          meta.appendChild(createAvatar(review.user));
           const user = document.createElement('span');
           user.className = 'review-user';
           user.textContent = `@${review.user}`;
@@ -317,6 +407,13 @@ if (reviewSection) {
 
           const tags = document.createElement('div');
           tags.className = 'review-tags';
+          const keywords = buildKeywords(review, index);
+          keywords.forEach((value) => {
+            const tag = document.createElement('span');
+            tag.className = 'review-tag review-tag--accent';
+            tag.textContent = value;
+            tags.appendChild(tag);
+          });
           const tagValues = [sanitizeValue(review.category), sanitizeValue(review.budget), sanitizeValue(review.duration)];
           tagValues.filter(Boolean).forEach((value) => {
             const tag = document.createElement('span');
