@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orca AI Studios | Ed Burns</title>
+  <title>Orca AI Studios | Signal-First Systems</title>
   <meta name="description"
-    content="Orca AI Studios builds AI-assisted business systems, automation, and web apps that save time and unlock growth." />
+    content="Orca AI Studios designs AI-assisted dashboards, automation, and web apps that turn messy operations into clear decisions." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -22,42 +22,84 @@
     <span class="orb orb-two" data-parallax data-speed="0.18"></span>
     <span class="orb orb-three" data-parallax data-speed="0.08"></span>
   </div>
+
   <header class="site-header">
     <nav class="nav">
-      <div class="logo">
-        <span class="logo-mark">Orca</span>
-        <span class="logo-sub">AI Studios</span>
-      </div>
-      <div class="nav-links">
-        <a href="#showcase">Showcase</a>
-        <a href="#apps">AI Apps</a>
-        <a href="#services">Services</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact" class="btn btn-primary">Work With Me</a>
+      <div class="nav-inner">
+        <div class="logo">
+          <span class="logo-mark">Orca</span>
+          <span class="logo-sub">AI Studios</span>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-links" id="nav-menu">
+          <a href="#showcase">Showcase</a>
+          <a href="#apps">AI Apps</a>
+          <a href="#services">Services</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#lead" class="btn btn-ghost">Get Blueprint</a>
+          <a href="#contact" class="btn btn-primary">Book a Call</a>
+        </div>
       </div>
     </nav>
+
     <section class="hero">
       <div class="hero-content reveal">
-        <p class="eyebrow">
-          Ed Burns · Bristol, UK · Signal-first Systems
-        </p>
-        <h1>Signal-first systems that make your business feel effortless.</h1>
+        <p class="eyebrow">Signal-first systems for founders & ops teams</p>
+        <h1>Turn chaotic operations into a signal-first system in 21 days.</h1>
         <p class="lead">
-          Orca AI Studios designs bold, visual workflows that turn messy data
-          into clear decisions. Think dashboards, automation, and AI tooling
-          that feels bespoke to your team.
+          Orca AI Studios builds AI-assisted dashboards, automation, and web apps that save time, reduce errors, and make
+          your next decision obvious.
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Start a Build</a>
-          <a href="#apps" class="btn btn-ghost">Explore Free Tools</a>
+          <a href="#lead" class="btn btn-primary">Get the Signal Blueprint</a>
+          <a href="#contact" class="btn btn-ghost">Book a Call</a>
         </div>
-        <div class="hero-chips">
-          <span>Live dashboards</span>
-          <span>Automation blueprints</span>
-          <span>AI-enabled ops</span>
-          <span>Design + dev</span>
+        <div class="hero-proof">
+          <div class="proof-item">
+            <strong>5/5</strong>
+            <span>Fiverr rating</span>
+          </div>
+          <div class="proof-item">
+            <strong>Automation-first</strong>
+            <span>AI-assisted delivery</span>
+          </div>
+          <div class="proof-item">
+            <strong>UK + US</strong>
+            <span>Remote partnerships</span>
+          </div>
         </div>
+
+        <div id="lead" class="lead-card">
+          <div class="lead-copy">
+            <p class="lead-title">Free Signal Blueprint</p>
+            <h3>Get the exact workflow I use to spot revenue leaks in 30 minutes.</h3>
+            <p class="lead-note">Instant PDF + 3 quick-win ideas tailored to your role.</p>
+          </div>
+          <form name="lead-magnet" method="POST" data-netlify="true" action="/lead-thanks.html"
+            data-redirect="/lead-thanks.html" class="lead-form">
+            <input type="hidden" name="form-name" value="lead-magnet" />
+            <input type="hidden" name="source" value="hero" />
+            <p class="hidden">
+              <label>
+                Don’t fill this out if you’re human: <input name="bot-field" />
+              </label>
+            </p>
+            <label class="sr-only" for="lead-email">Email</label>
+            <div class="lead-form-fields">
+              <input id="lead-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
+              <button type="submit" class="btn btn-primary">Send me the blueprint</button>
+            </div>
+            <p class="lead-privacy">No spam. Unsubscribe anytime.</p>
+            <p class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+
         <div class="hero-metrics">
           <div>
             <h3>Rapid Delivery</h3>
@@ -65,7 +107,7 @@
           </div>
           <div>
             <h3>Signal > Noise</h3>
-            <p>Systems that surface the insights your team actually needs.</p>
+            <p>Dashboards that surface only what your team needs.</p>
           </div>
           <div>
             <h3>Trusted Results</h3>
@@ -73,6 +115,7 @@
           </div>
         </div>
       </div>
+
       <div class="hero-visual" data-parallax data-speed="0.22">
         <div class="visual-card main" style="--image: url('images/ed_headshot_pro.jpg');">
           <div class="visual-overlay">
@@ -96,39 +139,62 @@
           </div>
         </div>
       </div>
-
     </section>
   </header>
 
   <main>
-    <section class="strip"
-      style="background: var(--color-primary); color: black; padding: 1rem 0; overflow: hidden; white-space: nowrap; font-weight: 700; font-family: var(--font-display);">
-      <div class="strip-track" style="animation: scroll 20s linear infinite; display: inline-block;">
-        <span style="margin: 0 2rem;">Advanced AI Operations</span>
-        <span style="margin: 0 2rem;">Custom Web Apps</span>
-        <span style="margin: 0 2rem;">Automation Systems</span>
-        <span style="margin: 0 2rem;">Dashboard Design</span>
-        <span style="margin: 0 2rem;">Excel → PDF Pipelines</span>
-        <span style="margin: 0 2rem;">Signal-First Strategy</span>
-        <span style="margin: 0 2rem;">Advanced AI Operations</span>
-        <span style="margin: 0 2rem;">Custom Web Apps</span>
-        <span style="margin: 0 2rem;">Automation Systems</span>
-        <span style="margin: 0 2rem;">Dashboard Design</span>
-        <span style="margin: 0 2rem;">Excel → PDF Pipelines</span>
-        <span style="margin: 0 2rem;">Signal-First Strategy</span>
+    <section class="strip">
+      <div class="strip-track">
+        <span>Advanced AI Operations</span>
+        <span>Custom Web Apps</span>
+        <span>Automation Systems</span>
+        <span>Dashboard Design</span>
+        <span>Excel → PDF Pipelines</span>
+        <span>Signal-First Strategy</span>
+        <span>Advanced AI Operations</span>
+        <span>Custom Web Apps</span>
+        <span>Automation Systems</span>
+        <span>Dashboard Design</span>
+        <span>Excel → PDF Pipelines</span>
+        <span>Signal-First Strategy</span>
       </div>
     </section>
-    <style>
-      @keyframes scroll {
-        from {
-          transform: translateX(0);
-        }
 
-        to {
-          transform: translateX(-50%);
-        }
-      }
-    </style>
+    <section class="section outcomes">
+      <div class="section-header reveal">
+        <h2>Outcomes teams notice in week one</h2>
+        <p>
+          You get clarity fast: a roadmap for what to automate, a dashboard that tells the truth, and a system you can
+          grow without chaos.
+        </p>
+      </div>
+      <div class="grid outcomes-grid">
+        <article class="panel reveal">
+          <h3>Operations clarity</h3>
+          <ul>
+            <li>Single source of truth for KPIs</li>
+            <li>Real-time alerts instead of daily firefighting</li>
+            <li>Decision-ready dashboards</li>
+          </ul>
+        </article>
+        <article class="panel reveal">
+          <h3>Automation that sticks</h3>
+          <ul>
+            <li>Less manual reporting & copy/paste</li>
+            <li>Clean handoffs between tools</li>
+            <li>Documented workflows your team can own</li>
+          </ul>
+        </article>
+        <article class="panel reveal">
+          <h3>Revenue momentum</h3>
+          <ul>
+            <li>Spot leaks in sales or fulfillment</li>
+            <li>Prioritize the 20% that drives results</li>
+            <li>Build the right product faster</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <section id="showcase" class="section showcase">
       <div class="section-header reveal">
@@ -163,55 +229,44 @@
       </div>
     </section>
 
-    <section id="watch" class="section" style="text-align: center;">
+    <section id="watch" class="section watch">
       <div class="section-header reveal">
         <h2>AI Education Videos by Orca AI Studios</h2>
         <p>Series: Layman's AI</p>
       </div>
 
-      <div class="carousel reveal"
-        style="display: flex; gap: 2rem; overflow-x: auto; padding: 2rem 5%; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 3rem;">
-
-        <!-- Video 1 -->
-        <div class="video-card" style="flex: 0 0 80%; max-width: 600px; scroll-snap-align: center;">
-          <div class="video-wrapper"
-            style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 80px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+      <div class="carousel reveal">
+        <div class="video-card">
+          <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/X6s8SABpoks" title="Layman's AI - Ep 1" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+              allowfullscreen></iframe>
           </div>
         </div>
 
-        <!-- Video 2 -->
-        <div class="video-card" style="flex: 0 0 80%; max-width: 600px; scroll-snap-align: center;">
-          <div class="video-wrapper"
-            style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 80px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="video-card">
+          <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/vO1On1MqGho" title="Layman's AI - Ep 2" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+              allowfullscreen></iframe>
           </div>
         </div>
 
-        <!-- Video 3 -->
-        <div class="video-card" style="flex: 0 0 80%; max-width: 600px; scroll-snap-align: center;">
-          <div class="video-wrapper"
-            style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 80px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="video-card">
+          <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/infpMRufLZI" title="Layman's AI - Ep 3" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+              allowfullscreen></iframe>
           </div>
         </div>
 
-        <!-- Video 4 -->
-        <div class="video-card" style="flex: 0 0 80%; max-width: 600px; scroll-snap-align: center;">
-          <div class="video-wrapper"
-            style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 80px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="video-card">
+          <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/RRwdVzDfAic" title="Layman's AI - Ep 4" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+              allowfullscreen></iframe>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -224,23 +279,21 @@
         </p>
       </div>
       <div class="grid apps-grid">
-        <article class="showcase-card reveal" data-tilt style="--image: url('images/georivals.png'); height: 350px;">
+        <article class="showcase-card app-card reveal" data-tilt style="--image: url('images/georivals.png');">
           <div class="showcase-content">
             <h3>GeoRivals</h3>
             <p>Competitive world map with real-time data visualization.</p>
-            <br>
             <a class="btn btn-primary" href="https://georivals-competitive-world-map-940204279764.us-west1.run.app/"
-              target="_blank">Launch App</a>
+              target="_blank" rel="noreferrer">Launch App</a>
           </div>
         </article>
 
-        <article class="showcase-card reveal" data-tilt style="--image: url('images/treehouse.png'); height: 350px;">
+        <article class="showcase-card app-card reveal" data-tilt style="--image: url('images/treehouse.png');">
           <div class="showcase-content">
             <h3>Tree House Goal Agent</h3>
             <p>A living ecosystem for your wildest ambitions.</p>
-            <br>
-            <a class="btn btn-primary" href="https://tree-house-goal-agent-940204279764.us-west1.run.app/"
-              target="_blank">Launch App</a>
+            <a class="btn btn-primary" href="https://tree-house-goal-agent-940204279764.us-west1.run.app/" target="_blank"
+              rel="noreferrer">Launch App</a>
           </div>
         </article>
       </div>
@@ -320,8 +373,7 @@
         <article class="panel review reveal">
           <p>
             “Ed did a phenomenal job, showcasing top-notch professionalism and incredible attention to detail. Highly
-            RECOMMEND working with Ed Burns - he exceeded all expectations and built an exemplary technical spreadsheet.
-            👌”
+            RECOMMEND working with Ed Burns - he exceeded all expectations and built an exemplary technical spreadsheet.”
           </p>
           <span>— gordonstewar309, United Kingdom</span>
         </article>
@@ -352,7 +404,7 @@
       <div class="grid pricing-grid">
         <article class="price-card reveal">
           <h3>Essential</h3>
-          <p class="price" style="font-size: 2rem; font-weight: 700;">£500</p>
+          <p class="price">£500</p>
           <p class="price-note">Landing page or local hosting setup</p>
           <ul>
             <li>CTA buttons to calendar or free tools</li>
@@ -361,10 +413,9 @@
           </ul>
           <a href="#contact" class="btn btn-outline">Start Essential</a>
         </article>
-        <article class="price-card featured reveal"
-          style="border-color: var(--color-primary); box-shadow: 0 0 40px rgba(0,240,255,0.15);">
+        <article class="price-card featured reveal">
           <h3>Growth</h3>
-          <p class="price" style="font-size: 2rem; font-weight: 700;">£2,500</p>
+          <p class="price">£2,500</p>
           <p class="price-note">Web app with login and profiles</p>
           <ul>
             <li>Google auth or custom sign-up</li>
@@ -375,7 +426,7 @@
         </article>
         <article class="price-card reveal">
           <h3>Scale</h3>
-          <p class="price" style="font-size: 2rem; font-weight: 700;">£5,000+</p>
+          <p class="price">£5,000+</p>
           <p class="price-note">Fully custom AI SaaS</p>
           <ul>
             <li>AI integrations and automation</li>
@@ -387,15 +438,63 @@
       </div>
     </section>
 
-    <section class="section callout reveal" style="text-align: center;">
-      <div style="margin-bottom: 2rem;">
-        <h2>Most systems are overpriced.</h2>
-        <p style="max-width: 600px; margin: 0 auto;">
-          We are in a new era where AI-assisted coding speeds up development
-          and lowers costs. I build smarter workflows, faster.
+    <section class="section cta-band reveal">
+      <div class="cta-content">
+        <h2>Want a system that feels effortless?</h2>
+        <p>
+          Grab the Signal Blueprint and I’ll send a quick-win plan for your team. It’s the fastest way to see where
+          automation creates immediate ROI.
         </p>
+        <form name="lead-magnet" method="POST" data-netlify="true" action="/lead-thanks.html"
+          data-redirect="/lead-thanks.html" class="lead-form inline">
+          <input type="hidden" name="form-name" value="lead-magnet" />
+          <input type="hidden" name="source" value="cta" />
+          <p class="hidden">
+            <label>
+              Don’t fill this out if you’re human: <input name="bot-field" />
+            </label>
+          </p>
+          <label class="sr-only" for="cta-email">Email</label>
+          <div class="lead-form-fields">
+            <input id="cta-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
+            <button type="submit" class="btn btn-primary">Send it over</button>
+          </div>
+          <p class="lead-privacy">No spam. Unsubscribe anytime.</p>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
       </div>
-      <a href="#contact" class="btn btn-primary">Let’s Build Yours</a>
+      <div class="cta-panel">
+        <div>
+          <p class="cta-label">Included in the Blueprint</p>
+          <ul>
+            <li>30-minute system audit checklist</li>
+            <li>AI automation stack recommendations</li>
+            <li>Dashboard layout template</li>
+          </ul>
+        </div>
+        <a href="#contact" class="btn btn-ghost">Prefer a call instead?</a>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="section-header reveal">
+        <h2>FAQ</h2>
+        <p>Short answers to the questions that come up on every discovery call.</p>
+      </div>
+      <div class="faq-grid">
+        <details class="faq-item reveal">
+          <summary>How fast can we get something live?</summary>
+          <p>Most dashboard or automation MVPs ship in 2-4 weeks. Landing pages ship even faster.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Do you work with my existing tools?</summary>
+          <p>Yes. I map workflows first, then integrate with the stack you already use so change management is easy.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>What happens after I submit the form?</summary>
+          <p>You get a tailored plan with timeline, pricing, and next steps. If we both agree, we build and launch.</p>
+        </details>
+      </div>
     </section>
 
     <section id="contact" class="section contact">
@@ -407,8 +506,8 @@
         </p>
       </div>
       <div class="grid contact-grid">
-        <form name="work-with-me" netlify action="/thanks.html" method="POST" class="contact-form reveal">
-          <!-- Hidden inputs for Netlify Form detection (optional but good practice) -->
+        <form name="work-with-me" netlify data-netlify="true" action="/thanks.html" data-redirect="/thanks.html"
+          method="POST" class="contact-form reveal">
           <input type="hidden" name="form-name" value="work-with-me" />
           <p class="hidden">
             <label>
@@ -417,15 +516,15 @@
           </p>
           <label>
             Full Name
-            <input name="name" type="text" required placeholder="Ed Burns" />
+            <input name="name" type="text" required placeholder="Ed Burns" autocomplete="name" />
           </label>
           <label>
             Email
-            <input name="email" type="email" required placeholder="you@company.com" />
+            <input name="email" type="email" required placeholder="you@company.com" autocomplete="email" />
           </label>
           <label>
             Company / Brand
-            <input name="company" type="text" placeholder="Orca AI Studios" />
+            <input name="company" type="text" placeholder="Orca AI Studios" autocomplete="organization" />
           </label>
           <label>
             Project Type
@@ -462,17 +561,17 @@
 
         <div class="contact-panel reveal">
           <h3>What happens next?</h3>
-          <ul style="color: var(--color-text-muted); padding-left: 1.2rem;">
-            <li style="margin-bottom: 0.5rem">We review your workflow and goals.</li>
-            <li style="margin-bottom: 0.5rem">You receive a plan with timeline and pricing.</li>
-            <li style="margin-bottom: 0.5rem">We build, test, and launch your system.</li>
+          <ul>
+            <li>We review your workflow and goals.</li>
+            <li>You receive a plan with timeline and pricing.</li>
+            <li>We build, test, and launch your system.</li>
           </ul>
-          <div class="contact-card" style="margin-top: 2rem;">
-            <p class="contact-title" style="color: var(--color-primary); font-weight: 700;">Direct Email</p>
+          <div class="contact-card">
+            <p class="contact-title">Direct Email</p>
             <p>edwardburns210@gmail.com</p>
           </div>
-          <div class="contact-card" style="margin-top: 1rem;">
-            <p class="contact-title" style="color: var(--color-primary); font-weight: 700;">Location</p>
+          <div class="contact-card">
+            <p class="contact-title">Location</p>
             <p>Remote · United Kingdom</p>
           </div>
         </div>
@@ -481,29 +580,34 @@
   </main>
 
   <footer class="site-footer">
-    <div>
-      <div class="logo">
-        <span class="logo-mark">Orca</span>
-        <span class="logo-sub">AI Studios</span>
+    <div class="footer-inner">
+      <div>
+        <div class="logo">
+          <span class="logo-mark">Orca</span>
+          <span class="logo-sub">AI Studios</span>
+        </div>
+        <p>
+          Orca AI Studios builds systems that work for your business, save you
+          time, and look stunning while they do it.
+        </p>
       </div>
-      <p style="max-width: 300px; color: var(--color-text-muted); margin-top: 1rem;">
-        Orca AI Studios builds systems that work for your business, save you
-        time, and look stunning while they do it.
-      </p>
-    </div>
-    <div class="footer-links">
-      <a href="#showcase">Showcase</a>
-      <a href="#apps">Free Apps</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Work With Me</a>
-    </div>
+      <div class="footer-links">
+        <a href="#showcase">Showcase</a>
+        <a href="#apps">Free Apps</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Work With Me</a>
+      </div>
+      <div class="footer-cta">
+        <p>Ready to see what your system could feel like?</p>
+        <a href="#lead" class="btn btn-primary">Get the Blueprint</a>
+      </div>
     </div>
   </footer>
-  <div style="text-align: center; padding: 10px; font-size: 0.7rem; color: var(--color-text-muted); opacity: 0.5;">
-    v4.9 · Deployed: Feb 4, 2026 @ 06:05 UTC</div>
+
+  <div class="version-stamp">
+    v5.1 · Deployed: Feb 4, 2026 @ 06:18 UTC</div>
 
   <script src="app.js"></script>
-
 </body>
 
 </html>

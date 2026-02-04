@@ -1,7 +1,4 @@
-const form = document.querySelector('form[data-netlify="true"]');
-const statusEl = document.querySelector('.form-status');
-const redirectUrl = form ? form.getAttribute('data-redirect') : null;
-const actionUrl = form ? form.getAttribute('action') || '/' : '/';
+const forms = document.querySelectorAll('form[data-netlify="true"], form[netlify]');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const encode = (data) =>
@@ -9,47 +6,89 @@ const encode = (data) =>
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
     .join('&');
 
-if (form) {
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (statusEl) {
-      statusEl.textContent = 'Sending...';
-    }
+if (forms.length) {
+  forms.forEach((form) => {
+    const statusEl = form.querySelector('.form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const redirectUrl = form.getAttribute('data-redirect');
+    const actionUrl = form.getAttribute('action') || '/';
 
-    const formData = new FormData(form);
-    const payload = {};
-    formData.forEach((value, key) => {
-      payload[key] = value;
-    });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (statusEl) {
+        statusEl.textContent = 'Sending...';
+      }
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+      }
 
-    try {
-      const response = await fetch(actionUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(payload),
+      const formData = new FormData(form);
+      const payload = {};
+      formData.forEach((value, key) => {
+        payload[key] = value;
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      try {
+        const response = await fetch(actionUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(payload),
+        });
 
-      if (redirectUrl) {
-        if (statusEl) {
-          statusEl.textContent = 'Redirecting you to book a call...';
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-        window.location.assign(redirectUrl);
-        return;
-      }
 
-      if (statusEl) {
-        statusEl.textContent = 'Thanks! Your request has been received.';
+        if (redirectUrl) {
+          if (statusEl) {
+            statusEl.textContent = 'Success! Redirecting...';
+          }
+          window.location.assign(redirectUrl);
+          return;
+        }
+
+        if (statusEl) {
+          statusEl.textContent = 'Thanks! Your request has been received.';
+        }
+        form.reset();
+      } catch (error) {
+        if (statusEl) {
+          statusEl.textContent = 'Something went wrong. Please try again.';
+        }
+        form.submit();
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.originalText || 'Submit';
+        }
       }
-      form.reset();
-    } catch (error) {
-      if (statusEl) {
-        statusEl.textContent = 'Something went wrong. Please try again.';
+    });
+  });
+}
+
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelectorAll('.nav-links a');
+if (navToggle) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = document.body.classList.toggle('nav-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (document.body.classList.contains('nav-open')) {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
       }
-      form.submit();
+    });
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.body.classList.contains('nav-open')) {
+      document.body.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
     }
   });
 }
@@ -111,8 +150,8 @@ if (!prefersReducedMotion && tiltItems.length) {
       const rect = item.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      const rotateY = ((x / rect.width) - 0.5) * maxTilt;
-      const rotateX = ((y / rect.height) - 0.5) * -maxTilt;
+      const rotateY = (x / rect.width - 0.5) * maxTilt;
+      const rotateX = (y / rect.height - 0.5) * -maxTilt;
       item.style.transform = `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
     };
 
