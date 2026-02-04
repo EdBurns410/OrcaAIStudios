@@ -36,19 +36,19 @@ exports.handler = async (event) => {
         const isLeadMagnet = formName === 'lead-magnet';
 
         const clientSubject = isLeadMagnet
-            ? 'Your 30-Day Custom System Plan'
+            ? 'Your Zero-Man Business Skill Pack'
             : 'Orca AI Studios - Request Received';
 
         const leadMagnetCta = LEAD_MAGNET_URL
-            ? `<a href="${LEAD_MAGNET_URL}" style="background-color: #00f0ff; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Download the Plan</a>`
-            : `<p style="color: #b6c2d9;">Reply to this email and I’ll send the plan personally.</p>`;
+            ? `<a href="${LEAD_MAGNET_URL}" style="background-color: #00f0ff; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Download the Pack</a>`
+            : `<p style="color: #b6c2d9;">Reply to this email and I’ll send the pack personally.</p>`;
 
         const clientHtml = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #fff; padding: 24px; border-radius: 10px;">
-        <h2 style="color: #00f0ff; margin-bottom: 16px;">${isLeadMagnet ? 'Plan Delivered' : 'Request Received'}</h2>
+        <h2 style="color: #00f0ff; margin-bottom: 16px;">${isLeadMagnet ? 'Pack Delivered' : 'Request Received'}</h2>
         <p>Hi ${name || 'there'},</p>
         ${isLeadMagnet
-                ? `<p>Your 30-Day Custom System Plan is ready. It shows the fastest path to reclaim 10–30 hours/week by replacing manual ops.</p>`
+                ? `<p>Your Zero-Man Business Skill Pack is ready. It shows the fastest path to reclaim 10–30 hours/week by replacing manual ops.</p>`
                 : `<p>Thanks for reaching out. Your request will be reviewed soon.</p>`}
         ${isLeadMagnet ? `<div style="margin: 24px 0;">${leadMagnetCta}</div>` : ''}
         <p>If you'd like to move faster, book a quick call below:</p>

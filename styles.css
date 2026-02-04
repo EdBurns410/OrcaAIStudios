@@ -912,6 +912,14 @@ p {
   justify-content: center;
 }
 
+.contact-illustration {
+  width: 100%;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  object-fit: cover;
+}
+
 .contact-card {
   margin-top: 1.5rem;
   padding: 1rem 1.25rem;
