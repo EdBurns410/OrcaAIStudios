@@ -10,8 +10,24 @@ ACCENT = (0.13, 0.83, 0.93)
 BLACK = (0, 0, 0)
 
 
+def sanitize(text: str) -> str:
+    replacements = {
+        "–": "-",
+        "—": "-",
+        "→": "->",
+        "•": "-",
+        "’": "'",
+        "‘": "'",
+        "“": "\"",
+        "”": "\"",
+    }
+    for src, dst in replacements.items():
+        text = text.replace(src, dst)
+    return text
+
+
 def pdf_escape(text: str) -> str:
-    return text.replace('\\', '\\\\').replace('(', '\\(').replace(')', '\\)')
+    return text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
 
 
 def wrap(text, width):
@@ -19,7 +35,7 @@ def wrap(text, width):
 
 
 def add_line(lines, text, x, y, size=12, color=BLACK):
-    lines.append({"text": text, "x": x, "y": y, "size": size, "color": color})
+    lines.append({"text": sanitize(text), "x": x, "y": y, "size": size, "color": color})
 
 
 def add_paragraph(lines, text, x, y, size=12, leading=16, width=90, color=BLACK):
@@ -32,7 +48,7 @@ def add_paragraph(lines, text, x, y, size=12, leading=16, width=90, color=BLACK)
 def add_bullets(lines, items, x, y, size=12, leading=16, width=86):
     for item in items:
         for i, line in enumerate(wrap(item, width)):
-            bullet = "• " if i == 0 else "  "
+            bullet = "- " if i == 0 else "  "
             add_line(lines, f"{bullet}{line}", x, y, size=size, color=BLACK)
             y -= leading
     return y
@@ -264,21 +280,15 @@ def build_pages():
 
 
 def build_pdf(pages, output_path: Path):
+    header = b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n"
     objects = []
-    offsets = []
 
-    def add_object(content: str):
-        offsets.append(sum(len(obj) for obj in objects))
+    def add_object(content: bytes):
         objects.append(content)
 
-    # Font object
-    font_obj = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"
-
-    # Build pages
-    page_objs = []
-    content_objs = []
-
-    for page_index, lines in enumerate(pages):
+    # Build content streams first
+    content_streams = []
+    for lines in pages:
         content_lines = ["BT"]
         for line in lines:
             r, g, b = line["color"]
@@ -288,62 +298,58 @@ def build_pdf(pages, output_path: Path):
                 f"1 0 0 1 {line['x']} {line['y']} Tm ({pdf_escape(line['text'])}) Tj"
             )
         content_lines.append("ET")
-        stream = "\n".join(content_lines)
-        content_obj = f"<< /Length {len(stream.encode('utf-8'))} >>\nstream\n{stream}\nendstream"
-        content_objs.append(content_obj)
+        stream = "\n".join(content_lines).encode("latin-1")
+        content_obj = b"<< /Length " + str(len(stream)).encode("ascii") + b" >>\nstream\n" + stream + b"\nendstream"
+        content_streams.append(content_obj)
 
-        page_obj = {
-            "content_index": len(content_objs),
-        }
-        page_objs.append(page_obj)
+    num_pages = len(pages)
 
-    # Catalog and pages objects reserved
-    add_object("<< /Type /Catalog /Pages 2 0 R >>")
-
-    # Pages object placeholder; fill later
-    kids = " ".join([f"{i + 3} 0 R" for i in range(len(page_objs))])
-    pages_obj = f"<< /Type /Pages /Kids [{kids}] /Count {len(page_objs)} >>"
-    add_object(pages_obj)
+    # 1: Catalog
+    add_object(b"<< /Type /Catalog /Pages 2 0 R >>")
+    # 2: Pages
+    page_kids = " ".join([f"{i + 4} 0 R" for i in range(num_pages)]).encode("ascii")
+    add_object(b"<< /Type /Pages /Kids [" + page_kids + b"] /Count " + str(num_pages).encode("ascii") + b" >>")
+    # 3: Font
+    add_object(b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
 
     # Page objects
-    for i, page in enumerate(page_objs):
-        content_ref = 3 + len(page_objs) + i
+    for i in range(num_pages):
+        content_ref = 4 + num_pages + i
         page_obj = (
-            "<< /Type /Page /Parent 2 0 R "
-            f"/MediaBox [0 0 {PAGE_W} {PAGE_H}] "
-            "/Resources << /Font << /F1 1 0 R >> >> "
-            f"/Contents {content_ref} 0 R >>"
+            b"<< /Type /Page /Parent 2 0 R "
+            + f"/MediaBox [0 0 {PAGE_W} {PAGE_H}] ".encode("ascii")
+            + b"/Resources << /Font << /F1 3 0 R >> >> "
+            + f"/Contents {content_ref} 0 R >>".encode("ascii")
         )
         add_object(page_obj)
 
     # Content objects
-    for content in content_objs:
-        add_object(content)
+    for content_obj in content_streams:
+        add_object(content_obj)
 
-    # Build xref
-    xref_start = sum(len(obj) for obj in objects)
-    xref_entries = ["0000000000 65535 f "]
-    running_offset = 0
-    for obj in objects:
-        xref_entries.append(f"{running_offset:010d} 00000 n ")
-        running_offset += len(obj)
+    # Write PDF with xref
+    pdf = bytearray()
+    pdf.extend(header)
+    offsets = [0]
+    for idx, obj in enumerate(objects, start=1):
+        offsets.append(len(pdf))
+        pdf.extend(f"{idx} 0 obj\n".encode("ascii"))
+        pdf.extend(obj)
+        pdf.extend(b"\nendobj\n")
 
-    xref = "xref\n0 {count}\n".format(count=len(xref_entries)) + "\n".join(xref_entries)
+    xref_start = len(pdf)
+    pdf.extend(f"xref\n0 {len(offsets)}\n".encode("ascii"))
+    pdf.extend(b"0000000000 65535 f \n")
+    for offset in offsets[1:]:
+        pdf.extend(f"{offset:010d} 00000 n \n".encode("ascii"))
+
     trailer = (
-        "trailer\n"
-        f"<< /Size {len(xref_entries)} /Root 1 0 R >>\n"
+        f"trailer\n<< /Size {len(offsets)} /Root 1 0 R >>\n"
         f"startxref\n{xref_start}\n%%EOF"
-    )
+    ).encode("ascii")
+    pdf.extend(trailer)
 
-    # Write file
-    with output_path.open("wb") as f:
-        for obj in objects:
-            f.write(f"{objects.index(obj)+1} 0 obj\n".encode("utf-8"))
-            f.write(obj.encode("utf-8"))
-            f.write(b"\nendobj\n")
-        f.write(xref.encode("utf-8"))
-        f.write(b"\n")
-        f.write(trailer.encode("utf-8"))
+    output_path.write_bytes(pdf)
 
 
 if __name__ == "__main__":
