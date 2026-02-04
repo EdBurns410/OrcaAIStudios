@@ -3,8 +3,6 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const { neon } = require('@netlify/neon');
 
 exports.handler = async (event, context) => {
-  console.log('Function: submissions started');
-
   const adminPassword = process.env.ADMIN_PASSWORD;
   const dbUrl = process.env.DATABASE_URL;
   const providedPassword = event.headers['x-admin-password'];
@@ -27,7 +25,6 @@ exports.handler = async (event, context) => {
   }
 
   if (providedPassword !== adminPassword) {
-    console.warn('Auth Failed: Incorrect password provided');
     return {
       statusCode: 401,
       body: JSON.stringify({ error: 'Invalid password' }),

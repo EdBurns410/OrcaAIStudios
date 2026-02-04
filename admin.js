@@ -118,9 +118,11 @@ const loadSubmissions = async () => {
     });
 
     if (response.status === 401 || response.status === 403) {
-      statusEl.textContent = 'Unauthorized access (wrong password).';
+      statusEl.textContent = 'Login Failed: Check console/alert.';
       statusEl.style.color = 'red';
-      logout(); // Force logout on bad auth
+      const data = await response.json();
+      alert(`Login Failed: ${data.error || 'Unauthorized'}`);
+      // logout(); // Disabled to allow retry
       return;
     }
 

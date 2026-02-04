@@ -1,3 +1,21 @@
 {
-	"siteId": "3f78388b-a6b4-4a87-b834-b012ecba3c78"
+	"siteId": "3f78388b-a6b4-4a87-b834-b012ecba3c78",
+	"geolocation": {
+		"data": {
+			"city": "Boston",
+			"country": {
+				"code": "US",
+				"name": "United States"
+			},
+			"subdivision": {
+				"code": "MA",
+				"name": "Massachusetts"
+			},
+			"timezone": "America/New_York",
+			"latitude": 42.3574,
+			"longitude": -71.0618,
+			"postalCode": "02293"
+		},
+		"timestamp": 1770169031104
+	}
 }
