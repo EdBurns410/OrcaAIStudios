@@ -332,6 +332,19 @@ if (reviewSection) {
         const cards = Array.from(reviewTrack.querySelectorAll('.review-card'));
         let activeIndex = 0;
 
+        const scrollTrackToCard = (card) => {
+          const trackRect = reviewTrack.getBoundingClientRect();
+          const cardRect = card.getBoundingClientRect();
+          const currentScroll = reviewTrack.scrollLeft;
+          const cardOffset = cardRect.left - trackRect.left + currentScroll;
+          const target =
+            cardOffset - (trackRect.width / 2 - cardRect.width / 2);
+          reviewTrack.scrollTo({
+            left: Math.max(0, target),
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          });
+        };
+
         const setActive = (index, shouldScroll = true) => {
           if (index < 0 || index >= cards.length) {
             return;
@@ -343,11 +356,7 @@ if (reviewSection) {
           chips.forEach((chip, i) => chip.classList.toggle('is-active', i === index));
           cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
           if (shouldScroll) {
-            cards[index].scrollIntoView({
-              behavior: prefersReducedMotion ? 'auto' : 'smooth',
-              inline: 'center',
-              block: 'nearest',
-            });
+            scrollTrackToCard(cards[index]);
           }
         };
 
