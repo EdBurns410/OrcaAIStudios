@@ -39,10 +39,13 @@
       <div class="admin-access panel">
         <h3>Admin Sign-In</h3>
         <p>Use your Orca admin account to load submissions.</p>
-        <div class="admin-inputs">
+        <div class="admin-inputs" style="flex-direction: column;">
+          <input type="email" id="admin-email" placeholder="Email" value="edwardburns210@gmail.com" />
+          <input type="password" id="admin-password" placeholder="Password" />
           <button class="btn btn-primary" id="login-btn">Sign In</button>
-          <button class="btn btn-ghost" id="load-submissions" style="display: none;">Refresh Data</button>
         </div>
+        <button class="btn btn-ghost" id="load-submissions" style="display: none; margin-top: 1rem;">Refresh
+          Data</button>
         <p class="admin-user" id="admin-user"></p>
         <p class="form-status" id="admin-status" aria-live="polite"></p>
       </div>
@@ -76,7 +79,6 @@
     </div>
   </main>
 
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="admin.js"></script>
 </body>
 
