@@ -2,21 +2,32 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const { neon } = require('@netlify/neon');
 
-// isAdminEmail removed - using password auth
-
 exports.handler = async (event, context) => {
+  console.log('Function: submissions started');
+
   const adminPassword = process.env.ADMIN_PASSWORD;
+  const dbUrl = process.env.DATABASE_URL;
   const providedPassword = event.headers['x-admin-password'];
 
+  // Debugging Envs
   if (!adminPassword) {
-    console.error('ADMIN_PASSWORD not set in environment');
+    console.error('CRITICAL: ADMIN_PASSWORD is missing from env');
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Server configuration error' }),
+      body: JSON.stringify({ error: 'Configuration Error: ADMIN_PASSWORD is not set.' }),
+    };
+  }
+
+  if (!dbUrl) {
+    console.error('CRITICAL: DATABASE_URL is missing from env');
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Configuration Error: DATABASE_URL is not set.' }),
     };
   }
 
   if (providedPassword !== adminPassword) {
+    console.warn('Auth Failed: Incorrect password provided');
     return {
       statusCode: 401,
       body: JSON.stringify({ error: 'Invalid password' }),
@@ -24,30 +35,25 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(dbUrl);
     const submissions = await sql`
       SELECT * FROM requests ORDER BY created_at DESC LIMIT 100
     `;
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-store',
-      },
       body: JSON.stringify({
-        form: {
-          id: 'neon-requests',
-          name: 'work-with-me',
-        },
         submissions,
       }),
     };
   } catch (error) {
-    console.error('DB Fetch Error:', error);
+    console.error('Database Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to fetch submissions from DB.' }),
+      body: JSON.stringify({
+        error: `Database Error: ${error.message}`,
+        details: error.stack
+      }),
     };
   }
 };
