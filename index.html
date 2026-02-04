@@ -753,18 +753,19 @@
               </select>
             </label>
             <label>
-              Project Details
-              <textarea name="message" rows="5" placeholder="Share timelines, goals, and any must-haves."
-                required></textarea>
+              Quick Summary (optional)
+              <textarea name="message" rows="4"
+                placeholder="Short summary if you want to keep it light. Use custom specification below for details."></textarea>
             </label>
 
             <label class="toggle">
-              <input type="checkbox" name="add_custom_spec" id="add-custom-spec" data-custom-toggle />
+              <input type="checkbox" name="add_custom_spec" id="add-custom-spec" data-custom-toggle
+                aria-controls="custom-spec" />
               <span class="toggle-text">Add custom specification</span>
               <span class="toggle-note">We’ll reveal a guided prompt so you can describe your app or spreadsheet idea.</span>
             </label>
 
-            <div class="custom-spec" data-custom-block hidden>
+            <div class="custom-spec" data-custom-block id="custom-spec" hidden>
               <label>
                 What are we building?
                 <textarea name="custom_spec" rows="4"
@@ -787,8 +788,7 @@
               </label>
               <label>
                 Upload files
-                <input type="file" name="files" multiple
-                  accept=\".pdf,.xls,.xlsx,.csv,.txt,image/*\" />
+                <input type="file" name="files" multiple accept=".pdf,.xls,.xlsx,.csv,.txt,image/*" />
               </label>
             </div>
 
@@ -844,7 +844,7 @@
   </footer>
 
   <div class="version-stamp">
-    v5.4 · Deployed: Feb 4, 2026 @ 06:53 UTC</div>
+    v5.5 · Deployed: Feb 4, 2026 @ 07:04 UTC</div>
 
   <script src="app.js"></script>
 </body>
