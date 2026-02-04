@@ -1,45 +1,25 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const { neon } = require('@netlify/neon');
 
-const isAdminEmail = async (email) => {
-  if (!email) return false;
-  const sql = neon(process.env.DATABASE_URL);
-  try {
-    const rows = await sql`
-      SELECT email, role
-      FROM admin_users
-      WHERE email = ${email} AND role = 'admin'
-      LIMIT 1
-    `;
-    return rows.length > 0;
-  } catch (err) {
-    console.error('Admin Check Error:', err);
-    return false;
-  }
-};
+// isAdminEmail removed - using password auth
 
 exports.handler = async (event, context) => {
-  const user = context.clientContext && context.clientContext.user;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const providedPassword = event.headers['x-admin-password'];
 
-  if (!user) {
+  if (!adminPassword) {
+    console.error('ADMIN_PASSWORD not set in environment');
     return {
-      statusCode: 401,
-      body: JSON.stringify({ error: 'Unauthorized.' }),
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Server configuration error' }),
     };
   }
 
-  try {
-    const allowed = await isAdminEmail(user.email);
-    if (!allowed) {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ error: 'Forbidden.' }),
-      };
-    }
-  } catch (error) {
-    console.error('Auth Error:', error);
+  if (providedPassword !== adminPassword) {
     return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Admin validation failed.' }),
+      statusCode: 401,
+      body: JSON.stringify({ error: 'Invalid password' }),
     };
   }
 

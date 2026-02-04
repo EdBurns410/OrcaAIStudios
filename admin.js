@@ -6,9 +6,12 @@ const statusEl = document.getElementById('admin-status');
 const userEl = document.getElementById('admin-user');
 const adminSection = document.querySelector('.admin-section');
 const tbody = document.getElementById('submissions-body');
+const emailInput = document.getElementById('admin-email');
+const passwordInput = document.getElementById('admin-password');
+const inputsContainer = document.querySelector('.admin-inputs');
 
 let submissionsCache = [];
-let currentUser = null;
+let authToken = null; // We'll store the password here temporarily
 
 // Utility: Escape HTML
 function escapeHtml(text) {
@@ -59,21 +62,48 @@ function renderTable(submissions) {
 }
 
 // Auth State Logic
-const setAuthState = (user) => {
-  currentUser = user;
-  const isAuthed = Boolean(user);
-
+const setAuthState = (isAuthed, email = '') => {
   if (adminSection) adminSection.style.display = isAuthed ? 'block' : 'none';
   if (loadBtn) loadBtn.style.display = isAuthed ? 'inline-flex' : 'none';
   if (exportBtn) exportBtn.style.display = isAuthed ? 'inline-flex' : 'none';
   if (signOutBtn) signOutBtn.style.display = isAuthed ? 'inline-flex' : 'none';
-  if (loginBtn) loginBtn.style.display = isAuthed ? 'none' : 'inline-flex';
-  if (userEl) userEl.textContent = isAuthed ? `Signed in as ${user.email}` : '';
+
+  // Hide login inputs if authed
+  if (inputsContainer) inputsContainer.style.display = isAuthed ? 'none' : 'flex';
+
+  if (userEl && isAuthed) userEl.textContent = `Signed in as ${email}`;
+  else if (userEl) userEl.textContent = '';
+};
+
+// Login Function
+const login = () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  if (email === 'edwardburns210@gmail.com' && password) {
+    // We set the token to the password for the backend check
+    authToken = password;
+    setAuthState(true, email);
+    loadSubmissions();
+  } else {
+    statusEl.textContent = 'Invalid credentials.';
+    statusEl.style.color = 'red';
+  }
+};
+
+// Logout Function
+const logout = () => {
+  authToken = null;
+  passwordInput.value = '';
+  setAuthState(false);
+  renderTable([]);
+  statusEl.textContent = 'Signed out.';
+  statusEl.style.color = 'var(--color-text-muted)';
 };
 
 // Fetch Data
 const loadSubmissions = async () => {
-  if (!currentUser) {
+  if (!authToken) {
     statusEl.textContent = 'Please sign in.';
     return;
   }
@@ -81,16 +111,16 @@ const loadSubmissions = async () => {
   statusEl.textContent = 'Loading requests...';
 
   try {
-    const token = await currentUser.jwt();
     const response = await fetch('/.netlify/functions/submissions', {
       headers: {
-        Authorization: `Bearer ${token}`
+        'x-admin-password': authToken
       }
     });
 
     if (response.status === 401 || response.status === 403) {
-      statusEl.textContent = 'Unauthorized access.';
+      statusEl.textContent = 'Unauthorized access (wrong password).';
       statusEl.style.color = 'red';
+      logout(); // Force logout on bad auth
       return;
     }
 
@@ -116,7 +146,7 @@ const exportCsv = () => {
     return;
   }
 
-  const headers = ['id', 'name', 'email', 'company', 'project_type', 'budget', 'message', 'created_at', 'role'];
+  const headers = ['id', 'name', 'email', 'company', 'project_type', 'budget', 'message', 'created_at'];
   const rows = submissionsCache.map(sub => {
     return headers.map(key => {
       let val = sub[key] || '';
@@ -134,26 +164,10 @@ const exportCsv = () => {
 };
 
 // Event Listeners
-if (loginBtn) loginBtn.addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.open());
-if (signOutBtn) signOutBtn.addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
+if (loginBtn) loginBtn.addEventListener('click', login);
+if (signOutBtn) signOutBtn.addEventListener('click', logout);
 if (loadBtn) loadBtn.addEventListener('click', loadSubmissions);
 if (exportBtn) exportBtn.addEventListener('click', exportCsv);
 
-// Init Identity
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init', user => {
-    setAuthState(user);
-    if (user) loadSubmissions();
-  });
-  window.netlifyIdentity.on('login', user => {
-    setAuthState(user);
-    window.netlifyIdentity.close();
-    loadSubmissions();
-  });
-  window.netlifyIdentity.on('logout', () => {
-    setAuthState(null);
-    renderTable([]);
-    statusEl.textContent = '';
-  });
-  window.netlifyIdentity.init();
-}
+// Initial State
+setAuthState(false);
