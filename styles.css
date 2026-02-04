@@ -1,30 +1,27 @@
 :root {
-  --color-bg: #03080f;
-  --color-bg-mesh: radial-gradient(at 0% 0%, #0f1c2e 0px, transparent 50%),
-    radial-gradient(at 100% 0%, #073b3a 0px, transparent 50%),
-    radial-gradient(at 100% 100%, #1e1136 0px, transparent 50%);
-
+  /* Premium Dark Theme */
+  --color-bg: #030304;
   --color-surface: rgba(255, 255, 255, 0.03);
-  --color-surface-hover: rgba(255, 255, 255, 0.07);
-  --color-border: rgba(255, 255, 255, 0.08);
+  --color-surface-hover: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.1);
 
-  --color-primary: #00f0ff;
-  --color-secondary: #7000ff;
-  --color-accent: #2de2e6;
+  --color-primary: #22d3ee;
+  /* Electric Cyan */
+  --color-primary-glow: rgba(34, 211, 238, 0.15);
 
-  --color-text-main: #ffffff;
+  --color-text: #ffffff;
   --color-text-muted: #94a3b8;
 
+  /* Typography */
   --font-display: 'Unbounded', sans-serif;
   --font-body: 'Urbanist', sans-serif;
 
-  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Transitions */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
 }
 
@@ -34,16 +31,28 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--color-bg);
-  background-image: var(--color-bg-mesh);
-  background-attachment: fixed;
-  background-size: cover;
-  color: var(--color-text-main);
   font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  overflow-x: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-top: 0;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Noise overlay */
@@ -302,8 +311,41 @@ h1 {
   transform: scale(1.05);
 }
 
+/* Updated Visual Card (The Retro Shot) */
+.visual-card.main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  /* Fix: Ensure image behind shows through */
+  /* Use the image directly here for the full cover effect on desktop right col */
+}
+
 .visual-card.main::before {
   filter: blur(3px) brightness(0.8);
+}
+
+@media (min-width: 900px) {
+  .visual-card.main {
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
+/* Floating Elements (Mini Cards) */
+.visual-card.mini {
+  position: absolute;
+  width: 280px;
+  height: auto;
+  aspect-ratio: 16/10;
+  bottom: 10%;
+  left: -20%;
+  z-index: 10;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-border);
 }
 
 /* Specific overlay adjustments */
@@ -350,30 +392,52 @@ h1 {
   box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
 }
 
-/* Showcase Grid */
+/* BENTO GRID SHOWCASE */
 .showcase-grid {
   display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .showcase-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 300px);
+  }
+
+  .showcase-card:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .showcase-card:nth-child(2) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .showcase-card:nth-child(3) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
 }
 
 .showcase-card {
-  height: 400px;
-  background-image: var(--image);
-  background-size: cover;
-  background-position: center;
   position: relative;
-  padding: 0;
+  border-radius: 4px;
+  /* Sharper */
   overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.3s ease;
 }
 
 .showcase-content {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   padding: 2rem;
-  background: linear-gradient(to top, rgba(3, 8, 15, 0.95), transparent);
+  background: linear-gradient(to top, #000 0%, transparent 100%);
   transform: translateY(20px);
   transition: transform 0.4s var(--ease-smooth);
 }
@@ -383,13 +447,16 @@ h1 {
 }
 
 .badge {
-  background: var(--color-primary);
-  color: var(--color-bg);
-  padding: 0.25rem 0.75rem;
-  border-radius: 100px;
+  display: inline-block;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--color-primary);
+  color: #000;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
 }
 
 /* Forms */
