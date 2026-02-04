@@ -37,7 +37,7 @@
           <span class="nav-toggle-bar"></span>
         </button>
         <div class="nav-links" id="nav-menu">
-          <a href="#showcase">Showcase</a>
+          <a href="#showcase">Projects</a>
           <a href="#apps">AI Apps</a>
           <a href="#services">Services</a>
           <a href="#reviews">Reviews</a>
@@ -93,8 +93,9 @@
               </p>
               <label class="sr-only" for="lead-email">Email</label>
               <div class="lead-form-fields">
-            <input id="lead-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
-            <button type="submit" class="btn btn-primary">Send me the plan</button>
+                <input id="lead-email" name="email" type="email" required placeholder="Work email"
+                  autocomplete="email" />
+                <button type="submit" class="btn btn-primary">Send me the plan</button>
               </div>
               <p class="lead-privacy">No spam. Unsubscribe anytime.</p>
               <p class="form-status" aria-live="polite"></p>
@@ -682,7 +683,7 @@
         </div>
         <div class="grid contact-grid">
           <form name="work-with-me" netlify data-netlify="true" action="/thanks.html" data-redirect="/thanks.html"
-            method="POST" class="contact-form reveal">
+            method="POST" enctype="multipart/form-data" class="contact-form reveal" data-enhanced-form>
             <input type="hidden" name="form-name" value="work-with-me" />
             <p class="hidden">
               <label>
@@ -712,6 +713,35 @@
                 <option>Other</option>
               </select>
             </label>
+            <fieldset class="offer-fieldset">
+              <legend>Choose a starting offer</legend>
+              <div class="offer-grid">
+                <label class="offer-card">
+                  <input type="radio" name="offer" value="MVP Web App (auth + DB)" required />
+                  <span class="offer-outline"></span>
+                  <span class="offer-title">MVP Web App (Auth + DB)</span>
+                  <span class="offer-desc">Core flows, roles, DB, and launch support.</span>
+                </label>
+                <label class="offer-card">
+                  <input type="radio" name="offer" value="Growth Web App + Automations" />
+                  <span class="offer-outline"></span>
+                  <span class="offer-title">Growth Web App + Automations</span>
+                  <span class="offer-desc">Integrations, workflow automation, and analytics.</span>
+                </label>
+                <label class="offer-card">
+                  <input type="radio" name="offer" value="Scale System + Integrations" />
+                  <span class="offer-outline"></span>
+                  <span class="offer-title">Scale System + Integrations</span>
+                  <span class="offer-desc">Multi-team ops platform with advanced workflows.</span>
+                </label>
+                <label class="offer-card">
+                  <input type="radio" name="offer" value="Data Services Add-On" />
+                  <span class="offer-outline"></span>
+                  <span class="offer-title">Data Services Add-On</span>
+                  <span class="offer-desc">Dashboards, reporting, and spreadsheet automation.</span>
+                </label>
+              </div>
+            </fieldset>
             <label>
               Budget Range
               <select name="budget" required>
@@ -727,6 +757,40 @@
               <textarea name="message" rows="5" placeholder="Share timelines, goals, and any must-haves."
                 required></textarea>
             </label>
+
+            <label class="toggle">
+              <input type="checkbox" name="add_custom_spec" id="add-custom-spec" data-custom-toggle />
+              <span class="toggle-text">Add custom specification</span>
+              <span class="toggle-note">We’ll reveal a guided prompt so you can describe your app or spreadsheet idea.</span>
+            </label>
+
+            <div class="custom-spec" data-custom-block hidden>
+              <label>
+                What are we building?
+                <textarea name="custom_spec" rows="4"
+                  placeholder="Describe the app or spreadsheet system. Who uses it? What needs to happen end-to-end?"></textarea>
+              </label>
+              <label>
+                Must-have features
+                <textarea name="must_have_features" rows="3"
+                  placeholder="Auth roles, dashboards, integrations, automations, PDF exports, etc."></textarea>
+              </label>
+              <label>
+                Data sources + tools
+                <textarea name="data_sources" rows="3"
+                  placeholder="Where does your data live today? (CRM, Airtable, Sheets, SQL, APIs)"></textarea>
+              </label>
+              <label>
+                Links to anything helpful
+                <textarea name="links" rows="3"
+                  placeholder="Paste links to docs, Looms, Figma, existing tools, or competitor apps (one per line)."></textarea>
+              </label>
+              <label>
+                Upload files
+                <input type="file" name="files" multiple
+                  accept=\".pdf,.xls,.xlsx,.csv,.txt,image/*\" />
+              </label>
+            </div>
 
             <button type="submit" class="btn btn-primary" id="submit-btn">
               Book Call
@@ -767,7 +831,7 @@
         </p>
       </div>
       <div class="footer-links">
-        <a href="#showcase">Showcase</a>
+        <a href="#showcase">Projects</a>
         <a href="#apps">Free Apps</a>
         <a href="#services">Services</a>
         <a href="#contact">Work With Me</a>
@@ -780,7 +844,7 @@
   </footer>
 
   <div class="version-stamp">
-    v5.3 · Deployed: Feb 4, 2026 @ 06:45 UTC</div>
+    v5.4 · Deployed: Feb 4, 2026 @ 06:53 UTC</div>
 
   <script src="app.js"></script>
 </body>
