@@ -52,13 +52,13 @@
       <div class="hero-inner">
         <div class="hero-content reveal">
           <p class="eyebrow">Custom web app development for ops-heavy teams</p>
-          <h1>Build the custom system your business runs on.</h1>
+          <h1>Build the system that gives you 10–30 hours back every week.</h1>
           <p class="lead">
             I design and ship web apps with auth, backend, databases, testing, automations, and integrations — so your
-            team stops duct-taping spreadsheets and starts moving faster.
+            team stops duct-taping spreadsheets and starts moving faster with measurable ROI.
           </p>
           <div class="hero-actions">
-            <a href="#lead" class="btn btn-primary">Get the 30-Day Plan</a>
+          <a href="#lead" class="btn btn-primary">Get the 30-Day Plan</a>
             <a href="#contact" class="btn btn-ghost">Book a Call</a>
           </div>
           <div class="hero-proof">
@@ -79,8 +79,8 @@
           <div id="lead" class="lead-card">
             <div class="lead-copy">
               <p class="lead-title">Free 30-Day Custom System Plan</p>
-              <h3>Get the exact roadmap I use to cut 10+ hours of ops every week.</h3>
-              <p class="lead-note">Includes architecture map, integration checklist, and a scope you can price fast.</p>
+              <h3>Get the exact roadmap to cut 10–30 hours of ops work every week.</h3>
+              <p class="lead-note">Includes architecture map, automation scorecard, and a scoped build you can price fast.</p>
             </div>
             <form name="lead-magnet" method="POST" data-netlify="true" action="/lead-thanks.html"
               data-redirect="/lead-thanks.html" class="lead-form">
@@ -93,8 +93,8 @@
               </p>
               <label class="sr-only" for="lead-email">Email</label>
               <div class="lead-form-fields">
-                <input id="lead-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
-                <button type="submit" class="btn btn-primary">Send me the plan</button>
+            <input id="lead-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
+            <button type="submit" class="btn btn-primary">Send me the plan</button>
               </div>
               <p class="lead-privacy">No spam. Unsubscribe anytime.</p>
               <p class="form-status" aria-live="polite"></p>
@@ -117,26 +117,41 @@
           </div>
         </div>
 
-        <div class="hero-visual" data-parallax data-speed="0.22">
-          <div class="visual-card main" style="--image: url('images/ed_headshot_pro.jpg');">
-            <div class="visual-overlay">
-              <p class="caption">Founder</p>
-              <h3>Ed Burns</h3>
-              <span>Bristol, UK</span>
+        <div class="hero-gallery" data-parallax data-speed="0.22">
+          <div class="gallery-card large" style="--image: url('images/bmtl_dark.png');">
+            <div class="gallery-overlay">
+              <span class="gallery-tag">Live System</span>
+              <h3>BMTL Logistics Ops</h3>
             </div>
           </div>
-          <div class="visual-card mini" data-tilt style="--image: url('images/bmtl_dark.png');">
-            <div class="visual-overlay">
-              <p class="caption">Recent Build</p>
-              <h3>Logistics Ops</h3>
-              <span>Dark mode dashboard</span>
+          <div class="gallery-card tall" style="--image: url('images/data_trading.png');">
+            <div class="gallery-overlay">
+              <span class="gallery-tag">Finance</span>
+              <h3>Trading P&amp;L</h3>
             </div>
           </div>
-          <div class="visual-card mini alt" data-tilt style="--image: url('images/data_trading.png');">
-            <div class="visual-overlay">
-              <p class="caption">Finance</p>
-              <h3>Trading P&L</h3>
-              <span>Live data feed</span>
+          <div class="gallery-card wide" style="--image: url('images/data_sales.png');">
+            <div class="gallery-overlay">
+              <span class="gallery-tag">CRM</span>
+              <h3>Sales Command</h3>
+            </div>
+          </div>
+          <div class="gallery-card wide" style="--image: url('images/data_revenue.png');">
+            <div class="gallery-overlay">
+              <span class="gallery-tag">Reporting</span>
+              <h3>Revenue Breakdown</h3>
+            </div>
+          </div>
+          <div class="gallery-card tall" style="--image: url('images/georivals.png');">
+            <div class="gallery-overlay">
+              <span class="gallery-tag">Web App</span>
+              <h3>GeoRivals</h3>
+            </div>
+          </div>
+          <div class="gallery-card large" style="--image: url('images/treehouse.png');">
+            <div class="gallery-overlay">
+              <span class="gallery-tag">Web App</span>
+              <h3>Tree House Agent</h3>
             </div>
           </div>
         </div>
@@ -203,31 +218,176 @@
     <section id="showcase" class="section showcase">
       <div class="section-inner">
         <div class="section-header reveal">
-          <h2>Systems That Scale</h2>
+          <h2>Project Gallery</h2>
           <p>
-            A blend of web apps and data systems built for speed, clarity, and repeatable results.
+            Recent web apps, automation systems, and data builds. Custom web apps are the core offer, with data services
+            available as an add-on.
           </p>
         </div>
-        <div class="showcase-grid">
-          <article class="showcase-card reveal" data-tilt style="--image: url('images/data_trading.png');">
-            <div class="showcase-content">
-              <span class="badge">Web App</span>
-              <h3>Trading Journal</h3>
-              <p>Real-time P&L tracking and risk analysis dashboard.</p>
+        <div class="grid projects-grid">
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-live">Live</span>
+              <span class="tag">Web App</span>
+            </div>
+            <h3>BMTL Logistics Operations Tracker</h3>
+            <p class="project-note">Ops tracker with invoice PDF downloads and a live dashboard.</p>
+            <p class="project-meta">Client: Jack Turvey · Company: BMTL Logistics</p>
+            <div class="project-actions">
+              <a class="btn btn-primary" href="https://bmtl-logistics--edwardburns180.replit.app/dashboard" target="_blank"
+                rel="noreferrer">Live App</a>
+              <a class="btn btn-ghost" href="https://replit.com/@edwardburns180/bmtl-logistics" target="_blank"
+                rel="noreferrer">Dev Link</a>
             </div>
           </article>
-          <article class="showcase-card reveal" data-tilt style="--image: url('images/data_sales.png');">
-            <div class="showcase-content">
-              <span class="badge">CRM + Ops</span>
-              <h3>Sales Command</h3>
-              <p>Dark-mode analytics helping teams close faster.</p>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">Data System</span>
+            </div>
+            <h3>Observability System + Spreadsheet</h3>
+            <p class="project-note">Observability dashboard with an initial spreadsheet baseline.</p>
+            <p class="project-meta">Company: UnifiedPelex</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1sJYm0fOdct3G-toBP4iAp7WgS3gJwocc?fullscreenApplet=true"
+                target="_blank" rel="noreferrer">Preview</a>
             </div>
           </article>
-          <article class="showcase-card reveal" data-tilt style="--image: url('images/data_revenue.png');">
-            <div class="showcase-content">
-              <span class="badge">Automation</span>
-              <h3>Revenue Breakdown</h3>
-              <p>Automated financial insights for rapid decision making.</p>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">AI UI</span>
+            </div>
+            <h3>Menu Glow</h3>
+            <p class="project-note">Menu experience concept. Image adjustments and system testing in progress.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1tWIKFuyOxR3E8T_-CzrJABy_CS3AxSts?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">Creator Tools</span>
+            </div>
+            <h3>ORCA WanderlustOS</h3>
+            <p class="project-note">Adventure planning system for influencers and creators.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/u/0/apps/drive/1V-zmJ3xEQpikF9uTgZ3zcHbEFi9Ia3F5?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">Ops</span>
+            </div>
+            <h3>Expensify — Employee Expense Tracker</h3>
+            <p class="project-note">Internal expense tracking workflow and reporting.</p>
+            <p class="project-meta">Client: Jason &amp; Amigos · Company: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1qosD9tdsYLaNNoKrs3xFBD2WlruyC_-9?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-experimental">Experimental</span>
+              <span class="tag">AI</span>
+            </div>
+            <h3>Website to Video</h3>
+            <p class="project-note">High API usage, experimental results for instant site-to-video output.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/u/0/apps/drive/16gSjEGU9F2uMBmonHgammGE1mytqlZZF?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-experimental">Experimental</span>
+              <span class="tag">AI</span>
+            </div>
+            <h3>DreamColor AI</h3>
+            <p class="project-note">Printable coloring books using creative AI imagery models.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/u/0/apps/drive/1FXKl8Eae98068PQzYY9oVuk1f7bjNLBF?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">AI Media</span>
+            </div>
+            <h3>Orbit — Personalized Podcast + Morning Brief</h3>
+            <p class="project-note">AI-powered podcast and morning newspaper tailored to each user.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1OTfUWHU_QjyLlZtMZ3RjXK7PmKANesn5?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">Creator Tools</span>
+            </div>
+            <h3>Algorhythm — Viral Hook Generator</h3>
+            <p class="project-note">Video planner, hook generator, and performance analyzer.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1m62js8y2be2yjYKoT9hRKvQNe5Jbm89V?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">Ops</span>
+            </div>
+            <h3>Orca Detail Studio</h3>
+            <p class="project-note">Detailing studio operations and customer workflow system.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1x91uPIB4h-zlbvIZU6Pj4QEziol5l5qg?showPreview=true&showAssistant=false"
+                target="_blank" rel="noreferrer">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-tags">
+              <span class="tag tag-muted">Unpublished</span>
+              <span class="tag">Data Services</span>
+            </div>
+            <h3>Automated Data Analysis + Tool Builder</h3>
+            <p class="project-note">Industry-specific KPI system builder for operations teams.</p>
+            <p class="project-meta">Client: Orca AI Studios</p>
+            <div class="project-actions">
+              <a class="btn btn-ghost"
+                href="https://aistudio.google.com/apps/drive/1QaYe6abFh0U8J_lwwHnddq45LBHyvRYQ?showPreview=true&showAssistant=true"
+                target="_blank" rel="noreferrer">Preview</a>
             </div>
           </article>
         </div>
@@ -451,11 +611,11 @@
     <section class="section cta-band reveal">
       <div class="section-inner">
         <div class="cta-content">
-          <h2>Get the 30-Day Custom System Plan</h2>
-          <p>
-            This plan shows the fastest path to a production-ready web app: architecture, integrations, and a scope that
-            removes guesswork. The claim is simple: you’ll reclaim 10+ hours/week by replacing manual ops.
-          </p>
+        <h2>Get the 30-Day Custom System Plan</h2>
+        <p>
+          This plan shows the fastest path to a production-ready web app: architecture, integrations, and a scope that
+          removes guesswork. The claim is simple: reclaim 10–30 hours/week by replacing manual ops.
+        </p>
           <form name="lead-magnet" method="POST" data-netlify="true" action="/lead-thanks.html"
             data-redirect="/lead-thanks.html" class="lead-form inline">
             <input type="hidden" name="form-name" value="lead-magnet" />
@@ -467,8 +627,8 @@
             </p>
             <label class="sr-only" for="cta-email">Email</label>
             <div class="lead-form-fields">
-              <input id="cta-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
-              <button type="submit" class="btn btn-primary">Send it over</button>
+            <input id="cta-email" name="email" type="email" required placeholder="Work email" autocomplete="email" />
+            <button type="submit" class="btn btn-primary">Send it over</button>
             </div>
             <p class="lead-privacy">No spam. Unsubscribe anytime.</p>
             <p class="form-status" aria-live="polite"></p>
@@ -478,9 +638,9 @@
           <div>
             <p class="cta-label">Inside the plan</p>
             <ul>
-              <li>30-day build roadmap</li>
-              <li>Auth + database checklist</li>
-              <li>Automation + integration list</li>
+            <li>30-day build roadmap</li>
+            <li>Auth + database checklist</li>
+            <li>Automation ROI ranking</li>
             </ul>
           </div>
           <a href="#contact" class="btn btn-ghost">Prefer a call instead?</a>
@@ -620,7 +780,7 @@
   </footer>
 
   <div class="version-stamp">
-    v5.2 · Deployed: Feb 4, 2026 @ 06:32 UTC</div>
+    v5.3 · Deployed: Feb 4, 2026 @ 06:45 UTC</div>
 
   <script src="app.js"></script>
 </body>
