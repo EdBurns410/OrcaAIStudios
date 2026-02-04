@@ -206,3 +206,214 @@ if (!prefersReducedMotion && tiltItems.length) {
     item.addEventListener('blur', reset);
   });
 }
+
+const reviewSection = document.querySelector('[data-reviews]');
+if (reviewSection) {
+  const reviewIndex = reviewSection.querySelector('[data-review-index]');
+  const reviewTrack = reviewSection.querySelector('[data-review-track]');
+  const reviewCount = reviewSection.querySelector('[data-review-count]');
+  const reviewAverage = reviewSection.querySelector('[data-review-average]');
+  const reviewPrev = reviewSection.querySelector('[data-review-prev]');
+  const reviewNext = reviewSection.querySelector('[data-review-next]');
+
+  if (reviewIndex && reviewTrack) {
+    const createStarIcon = (className) => {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.classList.add('review-star');
+      if (className) {
+        svg.classList.add(className);
+      }
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute(
+        'd',
+        'M12 2l2.82 6.57 7.12.61-5.4 4.69 1.6 7.01L12 17.77 5.86 20.88 7.46 13.87 2.06 9.18l7.12-.61L12 2z'
+      );
+      svg.appendChild(path);
+      return svg;
+    };
+
+    const sanitizeValue = (value) => (value && value !== 'N/A' ? value : null);
+
+    fetch('reviews.json')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load reviews');
+        }
+        return response.json();
+      })
+      .then((reviews) => {
+        if (!Array.isArray(reviews) || !reviews.length) {
+          return;
+        }
+
+        const ratingSum = reviews.reduce((sum, review) => sum + (parseFloat(review.rating) || 0), 0);
+        const ratingAverage = ratingSum / reviews.length;
+
+        if (reviewCount) {
+          reviewCount.textContent = reviews.length.toLocaleString();
+        }
+        if (reviewAverage) {
+          reviewAverage.textContent = ratingAverage.toFixed(1);
+        }
+
+        reviews.forEach((review, index) => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'review-chip';
+          chip.dataset.reviewIndex = String(index);
+
+          const chipLabel = document.createElement('span');
+          chipLabel.textContent = `@${review.user}`;
+          chip.appendChild(chipLabel);
+
+          const chipRating = document.createElement('span');
+          chipRating.className = 'review-chip-rating';
+          chipRating.appendChild(createStarIcon('review-star--sm'));
+          const chipRatingValue = document.createElement('span');
+          chipRatingValue.textContent = review.rating;
+          chipRating.appendChild(chipRatingValue);
+          chip.appendChild(chipRating);
+          reviewIndex.appendChild(chip);
+
+          const card = document.createElement('article');
+          card.className = 'review-card';
+          card.dataset.reviewIndex = String(index);
+
+          const cardTop = document.createElement('div');
+          cardTop.className = 'review-card-top';
+
+          const rating = document.createElement('div');
+          rating.className = 'review-rating';
+          rating.appendChild(createStarIcon());
+          const ratingValue = document.createElement('span');
+          ratingValue.textContent = review.rating;
+          rating.appendChild(ratingValue);
+          cardTop.appendChild(rating);
+
+          const time = document.createElement('span');
+          time.textContent = review.time;
+          cardTop.appendChild(time);
+          card.appendChild(cardTop);
+
+          const text = document.createElement('p');
+          text.className = 'review-text';
+          text.textContent = review.text;
+          card.appendChild(text);
+
+          const meta = document.createElement('div');
+          meta.className = 'review-meta';
+          const user = document.createElement('span');
+          user.className = 'review-user';
+          user.textContent = `@${review.user}`;
+          meta.appendChild(user);
+
+          const country = document.createElement('span');
+          country.className = 'review-country';
+          country.textContent = review.country;
+          meta.appendChild(country);
+          card.appendChild(meta);
+
+          const tags = document.createElement('div');
+          tags.className = 'review-tags';
+          const tagValues = [sanitizeValue(review.category), sanitizeValue(review.budget), sanitizeValue(review.duration)];
+          tagValues.filter(Boolean).forEach((value) => {
+            const tag = document.createElement('span');
+            tag.className = 'review-tag';
+            tag.textContent = value;
+            tags.appendChild(tag);
+          });
+          card.appendChild(tags);
+          reviewTrack.appendChild(card);
+        });
+
+        const chips = Array.from(reviewIndex.querySelectorAll('.review-chip'));
+        const cards = Array.from(reviewTrack.querySelectorAll('.review-card'));
+        let activeIndex = 0;
+
+        const setActive = (index, shouldScroll = true) => {
+          if (index < 0 || index >= cards.length) {
+            return;
+          }
+          if (activeIndex === index) {
+            return;
+          }
+          activeIndex = index;
+          chips.forEach((chip, i) => chip.classList.toggle('is-active', i === index));
+          cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
+          if (shouldScroll) {
+            cards[index].scrollIntoView({
+              behavior: prefersReducedMotion ? 'auto' : 'smooth',
+              inline: 'center',
+              block: 'nearest',
+            });
+          }
+        };
+
+        const updateActiveFromScroll = () => {
+          if (!cards.length) return;
+          const trackRect = reviewTrack.getBoundingClientRect();
+          const center = trackRect.left + trackRect.width / 2;
+          let closestIndex = 0;
+          let closestDistance = Number.POSITIVE_INFINITY;
+          cards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const distance = Math.abs(center - cardCenter);
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestIndex = index;
+            }
+          });
+          setActive(closestIndex, false);
+        };
+
+        let scrollRaf = null;
+        reviewTrack.addEventListener('scroll', () => {
+          if (scrollRaf) {
+            cancelAnimationFrame(scrollRaf);
+          }
+          scrollRaf = requestAnimationFrame(updateActiveFromScroll);
+        });
+
+        reviewIndex.addEventListener('mouseover', (event) => {
+          const target = event.target.closest('.review-chip');
+          if (!target) return;
+          const index = Number(target.dataset.reviewIndex);
+          setActive(index, true);
+        });
+
+        reviewIndex.addEventListener('focusin', (event) => {
+          const target = event.target.closest('.review-chip');
+          if (!target) return;
+          const index = Number(target.dataset.reviewIndex);
+          setActive(index, true);
+        });
+
+        reviewIndex.addEventListener('click', (event) => {
+          const target = event.target.closest('.review-chip');
+          if (!target) return;
+          const index = Number(target.dataset.reviewIndex);
+          setActive(index, true);
+        });
+
+        if (reviewPrev && reviewNext) {
+          const scrollByCard = (direction) => {
+            const nextIndex = Math.min(Math.max(activeIndex + direction, 0), cards.length - 1);
+            setActive(nextIndex, true);
+          };
+          reviewPrev.addEventListener('click', () => scrollByCard(-1));
+          reviewNext.addEventListener('click', () => scrollByCard(1));
+        }
+
+        chips[0]?.classList.add('is-active');
+        cards[0]?.classList.add('is-active');
+      })
+      .catch(() => {
+        if (reviewCount) {
+          reviewCount.textContent = '200+';
+        }
+      });
+  }
+}
